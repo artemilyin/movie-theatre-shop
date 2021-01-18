@@ -44,4 +44,15 @@ export class ProductsDataService {
       }
     ];
   }
+
+  productExists(productId: number): boolean {
+    let exists = false;
+    this.getProducts().forEach(product => {
+      if (product.id == productId) {
+        exists = true;
+      }
+    });
+
+    return exists;
+  }
 }
