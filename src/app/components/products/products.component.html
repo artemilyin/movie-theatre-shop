@@ -1,1 +1,23 @@
-<p>products works!</p>
+<div class="container">
+  <h2>Products</h2>
+
+  <div class="card-group">
+    <div class="card mr-3 ml-3" *ngFor="let product of products;">
+      <img src="{{ product.image }}" alt="alt" class="card-img-top">
+      <div class="card-body discount-{{ product.discount }}">
+        <h5 class="card-title mx-auto">{{ product.title }}</h5>
+        <p class="card-subtitle mx-auto">{{ product.price | currency }}</p>
+        <p class="card-text mx-auto">{{ product.description }}</p>
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-5">
+            <input type="number" class="form-control quantity" value="1">
+          </div>
+          <!-- TODO: create add to cart functionality -->
+          <a href="#" class="btn btn-primary mx-auto col pid-{{ product.id }}">Add to cart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
