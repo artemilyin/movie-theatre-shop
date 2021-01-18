@@ -23,7 +23,7 @@ export class ProductsComponent implements OnInit {
     this.products = this.productsData.getProducts();
   }
 
-  addToCart(event: Event|any, productId: number) {
+  addToCart(event: Event|any, productId: number): void {
     let quantitySelector = event.target.parentNode.querySelector('.quantity-' + productId);
     let quantity = quantitySelector.value;
     this.cartService.addProductToCart(productId, parseInt(quantity));

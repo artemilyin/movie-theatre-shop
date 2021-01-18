@@ -8,6 +8,7 @@ import { CartService } from "../../services/cart.service";
 })
 export class HeaderComponent implements OnInit {
   elementsInCart: number = 0;
+  cartComponentLoaded: boolean = false;
 
   constructor(private cartService: CartService) { }
 
@@ -15,8 +16,16 @@ export class HeaderComponent implements OnInit {
     this.setElementsInCart();
   }
 
-  setElementsInCart() {
+  setElementsInCart(): void {
     this.elementsInCart = this.cartService.getAllProductsCount();
   }
 
+  loadCartComponent(): void {
+    this.cartComponentLoaded = true;
+  }
+
+  setCartCleared(): void {
+    this.cartComponentLoaded = false;
+    this.setElementsInCart();
+  }
 }

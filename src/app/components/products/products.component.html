@@ -4,9 +4,9 @@
   <div class="card-group">
     <div class="card mr-3 ml-3" *ngFor="let product of products;">
       <img src="{{ product.image }}" alt="alt" class="card-img-top">
-      <div class="card-body discount-{{ product.discount }}">
+      <div class="card-body">
         <h5 class="card-title mx-auto">{{ product.title }}</h5>
-        <p class="card-subtitle mx-auto">{{ product.price | currency }}</p>
+        <p class="card-subtitle mx-auto">{{ product.price | currency }} <span *ngIf="product.discount">(or five for the price of three)</span></p>
         <p class="card-text mx-auto">{{ product.description }}</p>
       </div>
       <div class="card-footer">

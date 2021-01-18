@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Product } from "./products-data.service";
+
+export interface ProductsInCart { [key: number]: number; }
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Product } from "./products-data.service";
 export class CartService {
   constructor() {}
 
-  addProductToCart(productId: number, quantity: number) {
+  addProductToCart(productId: number, quantity: number): void {
     let productsInCart = this.getAllProducts();
 
     if (productsInCart.hasOwnProperty(productId)) {
@@ -19,14 +20,14 @@ export class CartService {
     localStorage.setItem('cart', JSON.stringify(productsInCart));
   }
 
-  removeProductFromCart(productId: number) {
+  removeProductFromCart(productId: number): void {
     let productsInCart = this.getAllProducts();
     if (productsInCart.hasOwnProperty(productId)) {
       delete productsInCart[productId];
     }
   }
 
-  getAllProducts() {
+  getAllProducts(): ProductsInCart {
     let cart = localStorage.getItem('cart');
 
     if (!cart) {
@@ -45,7 +46,7 @@ export class CartService {
     return count;
   }
 
-  removeAllProducts() {
+  removeAllProducts(): void {
     localStorage.clear();
   }
 
