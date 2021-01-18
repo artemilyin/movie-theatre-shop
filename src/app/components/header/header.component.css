@@ -1,0 +1,9 @@
+.cart-icon {
+  fill: grey;
+}
+.badge {
+  color: grey;
+  vertical-align: top;
+  background-color: lightblue;
+  border-radius: 15px;
+}
