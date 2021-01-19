@@ -17,7 +17,8 @@ export class ProductsDataService {
   constructor() { }
 
   getProducts():Array<Product> {
-    return [
+    let userProducts = this.getUserProducts();
+    let baseProducts = [
       {
         id: 1,
         title: "Popcorn",
@@ -43,6 +44,8 @@ export class ProductsDataService {
         description: "Soda is a drink that usually contains carbonated water (although some vitamin waters and lemonades are not carbonated), a sweetener, and a natural or artificial flavoring."
       }
     ];
+
+    return baseProducts.concat(userProducts);
   }
 
   productExists(productId: number): boolean {
@@ -54,5 +57,20 @@ export class ProductsDataService {
     });
 
     return exists;
+  }
+
+  addProduct(data: Product): void {
+    let addedProducts = this.getUserProducts();
+    addedProducts.push(data);
+    localStorage.setItem('added_products', JSON.stringify(addedProducts));
+  }
+
+  getUserProducts(): Array<Product> {
+    let addedProducts = localStorage.getItem('added_products');
+    if (!addedProducts) {
+      return [];
+    }
+
+    return JSON.parse(addedProducts);
   }
 }

@@ -27,5 +27,6 @@ export class HeaderComponent implements OnInit {
   setCartCleared(): void {
     this.cartComponentLoaded = false;
     this.setElementsInCart();
+    document.querySelector('.cart-button .badge')!.innerHTML = this.cartService.getAllProductsCount().toString();
   }
 }

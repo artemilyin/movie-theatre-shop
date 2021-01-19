@@ -65,7 +65,6 @@ export class CartComponent implements OnInit {
     let total = 0;
     let productsInCart = this.productsInCart;
     for (let product of productsInCart) {
-      console.log(product);
       if (product.discount) {
         let discounted = Math.floor(product.quantity / 5);
         let regular = product.quantity % 5;

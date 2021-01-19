@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsDataService } from "../../services/products-data.service";
-import { Product } from "../../services/products-data.service";
+import { ProductsDataService, Product } from "../../services/products-data.service";
 import { CartService } from "../../services/cart.service";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-products',
@@ -10,8 +10,23 @@ import { CartService } from "../../services/cart.service";
 })
 export class ProductsComponent implements OnInit {
   products: Array<Product> = [];
+  productForm: FormGroup;
+  formDefaults = {
+    id: this.productsData.getProducts().length + 1,
+    title: '',
+    price: 0,
+    description: '',
+    discount: false,
+    image: ''
+  };
 
-  constructor(private productsData: ProductsDataService, private cartService: CartService) { }
+  constructor(
+    private productsData: ProductsDataService,
+    private cartService: CartService,
+    private formBuilder: FormBuilder
+  ) {
+    this.productForm = this.formBuilder.group(this.formDefaults);
+  }
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -31,5 +46,15 @@ export class ProductsComponent implements OnInit {
     let totalInCart = document.querySelector('.cart-button .badge')!.innerHTML;
     let newTotal = parseInt(totalInCart) + parseInt(quantity);
     document.querySelector('.cart-button .badge')!.innerHTML = newTotal.toString();
+  }
+
+  newProductId(): number {
+    return this.productsData.getProducts().length + 1;
+  }
+
+  onSubmit(): void {
+    this.productsData.addProduct(this.productForm.value);
+    this.productForm.reset(this.formDefaults);
+    this.getAllProducts();
   }
 }

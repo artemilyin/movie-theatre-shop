@@ -1,20 +1,82 @@
 <div class="container">
   <h2>Products</h2>
 
-  <div class="card-group">
-    <div class="card mr-3 ml-3" *ngFor="let product of products;">
-      <img src="{{ product.image }}" alt="alt" class="card-img-top">
+  <div class="row">
+    <div class="col-4 card mr-3 ml-3" *ngFor="let product of products;">
+      <img src="{{ product.image }}" alt="alt" class="card-img-top" *ngIf="product.image">
       <div class="card-body">
         <h5 class="card-title mx-auto">{{ product.title }}</h5>
         <p class="card-subtitle mx-auto">{{ product.price | currency }} <span *ngIf="product.discount">(or five for the price of three)</span></p>
-        <p class="card-text mx-auto">{{ product.description }}</p>
+        <p class="card-text mx-auto" *ngIf="product.description">{{ product.description }}</p>
       </div>
       <div class="card-footer">
         <div class="row">
           <div class="col-5">
-            <input type="number" class="form-control quantity-{{ product.id }}" value="1">
+            <input type="number" class="form-control quantity-{{ product.id }}" value="1" min="1">
           </div>
           <button class="btn btn-primary mx-auto col" (click)="addToCart($event, product.id)">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion mt-5 mb-5" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Add your own product
+          </button>
+        </h5>
+      </div>
+
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+
+          <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <input type="hidden" value="{{ newProductId() }}" formControlName="id">
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Product name" required="required" formControlName="title">
+              </div>
+              <div class="col">
+                <div class="row">
+                  <div class="col-2 pr-0 dollar-wrap">
+                    <label for="price" class="dollar-sign">$</label>
+                  </div>
+                  <div class="col-10 pl-0">
+                    <input type="number" id="price" class="form-control" min="1" value="1" required="required" formControlName="price">
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="discount" formControlName="discount">
+                  <label class="form-check-label" for="discount">
+                    Does product have a discount?
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <label for="productDescription">Product Description</label>
+                <textarea class="form-control" id="productDescription" rows="3" formControlName="description"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <label for="image">Product image url</label>
+                <input type="text" id="image" class="form-control" placeholder="Image URL" formControlName="image">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+
         </div>
       </div>
     </div>
