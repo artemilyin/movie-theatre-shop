@@ -7,26 +7,29 @@ import { CartService } from "../../services/cart.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  elementsInCart: number = 0;
+  elementsInCartCount: number = 0;
   cartComponentLoaded: boolean = false;
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.setElementsInCart();
+    this.setElementsInCartCount();
   }
 
-  setElementsInCart(): void {
-    this.elementsInCart = this.cartService.getAllProductsCount();
+  // Sets elements in cart count.
+  setElementsInCartCount(): void {
+    this.elementsInCartCount = this.cartService.getAllProductsCount();
   }
 
-  loadCartComponent(): void {
+  // Sets cartComponentLoaded to true.
+  // Used for displaying cart component.
+  setLoadCartComponent(): void {
     this.cartComponentLoaded = true;
   }
 
+  // Sets cartComponentLoaded to false and recalculates items in cart.
   setCartCleared(): void {
     this.cartComponentLoaded = false;
-    this.setElementsInCart();
     document.querySelector('.cart-button .badge')!.innerHTML = this.cartService.getAllProductsCount().toString();
   }
 }
