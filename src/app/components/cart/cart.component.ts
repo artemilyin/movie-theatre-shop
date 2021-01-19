@@ -1,9 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { ProductsDataService } from "../../services/products-data.service";
-import { Product } from "../../services/products-data.service";
+import { ProductsDataService, Product } from "../../services/products-data.service";
 import { CartService, ProductsInCart } from "../../services/cart.service";
 
-interface ProductInCart {
+interface SingleProductInCart {
   id: number,
   title: string,
   price: number,
@@ -19,25 +18,24 @@ interface ProductInCart {
 export class CartComponent implements OnInit {
   @Output() cartCleared: EventEmitter<any> = new EventEmitter<any>();
 
-  allProducts: Array<Product> = [];
   productsAdded: ProductsInCart = {};
-  productsInCart: Array<ProductInCart> = [];
+  productsInCartData: Array<SingleProductInCart> = [];
   totalSum: number = 0;
 
   constructor(private productsData: ProductsDataService, private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.allProducts = this.productsData.getProducts();
     this.productsAdded = this.cartService.getAllProducts();
-    this.productsInCart = this.productsCartDisplayData();
+    this.productsInCartData = this.productsCartDisplayData();
 
     this.calculateTotal();
   }
 
-  productsCartDisplayData(): Array<ProductInCart> {
+  // Gets the data for displaying products in cart.
+  productsCartDisplayData(): Array<SingleProductInCart> {
     let output = [];
 
-    for (let product of this.allProducts) {
+    for (let product of this.productsData.getProducts()) {
       if (this.productsAdded.hasOwnProperty(product.id)) {
         output.push({
           id: product.id,
@@ -52,18 +50,21 @@ export class CartComponent implements OnInit {
     return output;
   }
 
+  // Removes all products from cart.
   removeAllProducts(): void {
     this.cartService.removeAllProducts();
     this.emitCartCleared();
   }
 
+  // Emits cartCleared event.
   emitCartCleared():void {
     this.cartCleared.emit(true);
   }
 
+  // Calculates total.
   calculateTotal(): void {
     let total = 0;
-    let productsInCart = this.productsInCart;
+    let productsInCart = this.productsInCartData;
     for (let product of productsInCart) {
       if (product.discount) {
         let discounted = Math.floor(product.quantity / 5);

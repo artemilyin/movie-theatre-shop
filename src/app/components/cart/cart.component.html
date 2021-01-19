@@ -9,28 +9,28 @@
       </div>
       <div class="modal-body">
 
-        <div class="card text-center mb-3" *ngFor="let product of productsInCart;">
+        <div class="card text-center mb-3" *ngFor="let product of productsInCartData;">
           <div class="card-body">
             <h4 class="card-title">{{ product.title }}</h4>
             <h5 class="card-subtitle">{{ product.quantity }} items, {{ product.price | currency }} each <span *ngIf="product.discount">(or five for the price of three)</span></h5>
           </div>
         </div>
 
-        <div class="card text-center mb-3" *ngIf="productsInCart.length > 0">
+        <div class="card text-center mb-3" *ngIf="productsInCartData.length > 0">
           <div class="card-body">
             <h4 class="card-title">Total - {{ totalSum | currency }}</h4>
             <button class="btn btn-danger" (click)="removeAllProducts()" data-dismiss="modal">Clear Cart</button>
           </div>
         </div>
 
-        <div class="card text-center mb-3" *ngIf="productsInCart.length == 0">
+        <div class="card text-center mb-3" *ngIf="productsInCartData.length == 0">
           <div class="card-body">
             <h4 class="card-title">The card is empty</h4>
           </div>
         </div>
 
       </div>
-      <div class="modal-footer" *ngIf="productsInCart.length > 0">
+      <div class="modal-footer" *ngIf="productsInCartData.length > 0">
         <button type="button" class="btn btn-primary">Checkout</button>
       </div>
     </div>
