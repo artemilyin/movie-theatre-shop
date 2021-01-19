@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { ProductsDataService, Product } from "../../services/products-data.service";
+import { ProductsDataService } from "../../services/products-data.service";
 import { CartService, ProductsInCart } from "../../services/cart.service";
 
 interface SingleProductInCart {

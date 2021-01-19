@@ -7,13 +7,15 @@ import { CartComponent } from './components/cart/cart.component';
 import { ProductsComponent } from './components/products/products.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CartComponent,
     ProductsComponent,
-    HeaderComponent
+    HeaderComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

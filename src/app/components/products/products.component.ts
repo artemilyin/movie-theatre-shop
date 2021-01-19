@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsDataService, Product } from "../../services/products-data.service";
 import { CartService } from "../../services/cart.service";
-import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-products',
@@ -10,23 +9,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 })
 export class ProductsComponent implements OnInit {
   products: Array<Product> = [];
-  productForm: FormGroup;
-  formDefaults = {
-    id: this.productsData.getProducts().length + 1,
-    title: '',
-    price: 0,
-    description: '',
-    discount: false,
-    image: ''
-  };
 
-  constructor(
-    private productsData: ProductsDataService,
-    private cartService: CartService,
-    private formBuilder: FormBuilder
-  ) {
-    this.productForm = this.formBuilder.group(this.formDefaults);
-  }
+  constructor(private productsData: ProductsDataService, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -38,23 +22,21 @@ export class ProductsComponent implements OnInit {
     this.products = this.productsData.getProducts();
   }
 
+  // Performs add to cart functionality by adding product to cart and incrementing product count.
   addToCart(event: Event|any, productId: number): void {
+    // Get product quantity and add product to cart
     let quantitySelector = event.target.parentNode.querySelector('.quantity-' + productId);
     let quantity = quantitySelector.value;
     this.cartService.addProductToCart(productId, parseInt(quantity));
+    // Set quantity to default value of 1.
     quantitySelector.value = 1;
+    // Update items in cart count.
     let totalInCart = document.querySelector('.cart-button .badge')!.innerHTML;
     let newTotal = parseInt(totalInCart) + parseInt(quantity);
     document.querySelector('.cart-button .badge')!.innerHTML = newTotal.toString();
   }
 
-  newProductId(): number {
-    return this.productsData.getProducts().length + 1;
-  }
-
-  onSubmit(): void {
-    this.productsData.addProduct(this.productForm.value);
-    this.productForm.reset(this.formDefaults);
+  updateProducts() {
     this.getAllProducts();
   }
 }
