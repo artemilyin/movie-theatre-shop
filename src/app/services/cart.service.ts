@@ -8,6 +8,7 @@ export interface ProductsInCart { [key: number]: number; }
 export class CartService {
   constructor() {}
 
+  // Adds product information into localStorage.
   addProductToCart(productId: number, quantity: number): void {
     let productsInCart = this.getAllProducts();
 
@@ -20,13 +21,7 @@ export class CartService {
     localStorage.setItem('cart', JSON.stringify(productsInCart));
   }
 
-  removeProductFromCart(productId: number): void {
-    let productsInCart = this.getAllProducts();
-    if (productsInCart.hasOwnProperty(productId)) {
-      delete productsInCart[productId];
-    }
-  }
-
+  // Gets all products added to cart.
   getAllProducts(): ProductsInCart {
     let cart = localStorage.getItem('cart');
 
@@ -36,6 +31,7 @@ export class CartService {
     return JSON.parse(cart);
   }
 
+  // Gets count of all products added to cart.
   getAllProductsCount(): number {
     let count = 0;
     let products = this.getAllProducts();
@@ -46,9 +42,8 @@ export class CartService {
     return count;
   }
 
+  // Removes all products from cart.
   removeAllProducts(): void {
-    localStorage.clear();
+    localStorage.removeItem('cart');
   }
-
-
 }

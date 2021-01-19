@@ -16,7 +16,8 @@ export class ProductsDataService {
 
   constructor() { }
 
-  getProducts():Array<Product> {
+  // Gets all existing products - products from "API" and added by user.
+  getProducts(): Array<Product> {
     let userProducts = this.getUserProducts();
     let baseProducts = [
       {
@@ -48,23 +49,16 @@ export class ProductsDataService {
     return baseProducts.concat(userProducts);
   }
 
-  productExists(productId: number): boolean {
-    let exists = false;
-    this.getProducts().forEach(product => {
-      if (product.id == productId) {
-        exists = true;
-      }
-    });
-
-    return exists;
-  }
-
+  // Adds product to existing products list.
+  // @see this.getProducts()
   addProduct(data: Product): void {
     let addedProducts = this.getUserProducts();
     addedProducts.push(data);
     localStorage.setItem('added_products', JSON.stringify(addedProducts));
   }
 
+  // Gets products added by users.
+  // @see this.getProducts()
   getUserProducts(): Array<Product> {
     let addedProducts = localStorage.getItem('added_products');
     if (!addedProducts) {
