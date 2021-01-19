@@ -22,4 +22,16 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set setLoadCartComponent to true', () => {
+    component.setLoadCartComponent();
+    fixture.detectChanges();
+    expect(component.cartComponentLoaded).toBeTrue();
+  });
+
+  it('should set cartComponentLoaded to false', () => {
+    component.setCartCleared();
+    fixture.detectChanges();
+    expect(component.cartComponentLoaded).toBeFalse();
+  });
 });

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductsComponent } from './products.component';
+import {ProductsDataService} from "../../services/products-data.service";
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
@@ -21,5 +22,12 @@ describe('ProductsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should use products list from productsData service', () => {
+    const productsDataService = fixture.debugElement.injector.get(ProductsDataService);
+    fixture.detectChanges();
+    component.getAllProducts();
+    expect(productsDataService.getProducts()).toEqual(component.products);
   });
 });
