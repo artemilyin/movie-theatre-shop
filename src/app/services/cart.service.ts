@@ -46,4 +46,11 @@ export class CartService {
   removeAllProducts(): void {
     localStorage.removeItem('cart');
   }
+
+  // Removes product from cart using provided productId.
+  removeProductFromCart(productId: number): void {
+    let productsInCart = this.getAllProducts();
+    delete productsInCart[productId];
+    localStorage.setItem('cart', JSON.stringify(productsInCart));
+  }
 }

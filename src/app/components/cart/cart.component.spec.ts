@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CartComponent } from './cart.component';
-import {ProductsDataService} from "../../services/products-data.service";
-import {CartService} from "../../services/cart.service";
+import { CartService } from "../../services/cart.service";
 
 describe('CartComponent', () => {
   let component: CartComponent;
@@ -49,4 +48,13 @@ describe('CartComponent', () => {
     expect(component.totalSum).toBe(23);
   });
 
+  it('should remove product from cart', () => {
+    const cartService = fixture.debugElement.injector.get(CartService);
+    cartService.addProductToCart(1, 3);
+    cartService.addProductToCart(2, 5);
+    let countBeforeRemoving = cartService.getAllProductsCount();
+    component.removeProduct(2);
+    fixture.detectChanges();
+    expect(cartService.getAllProductsCount()).toBeLessThan(countBeforeRemoving);
+  });
 });

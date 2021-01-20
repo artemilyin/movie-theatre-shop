@@ -25,9 +25,7 @@ export class CartComponent implements OnInit {
   constructor(private productsData: ProductsDataService, private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.productsAdded = this.cartService.getAllProducts();
-    this.productsInCartData = this.productsCartDisplayData();
-
+    this.updateProductsInCart();
     this.calculateTotal();
   }
 
@@ -77,5 +75,18 @@ export class CartComponent implements OnInit {
     }
 
     this.totalSum = total;
+  }
+
+  // Updates products in cart
+  updateProductsInCart(): void {
+    this.productsAdded = this.cartService.getAllProducts();
+    this.productsInCartData = this.productsCartDisplayData();
+  }
+
+  // Removes single product from cart
+  removeProduct(productId: number): void {
+    this.cartService.removeProductFromCart(productId)
+    this.updateProductsInCart();
+    this.calculateTotal();
   }
 }
