@@ -15,7 +15,11 @@
           <input type="hidden" value="{{ newProductId() }}" formControlName="id">
           <div class="row">
             <div class="col">
-              <input type="text" class="form-control" placeholder="Product name" required="required" formControlName="title">
+              <input type="text" name="title" class="form-control" placeholder="Product name"
+                     required="required" formControlName="title" (input)="checkProductExistence($event)">
+              <div *ngIf="titleError" class="btn-danger p-3 title-error">
+                Product with this name already exist!
+              </div>
             </div>
             <div class="col">
               <div class="row">
@@ -68,7 +72,7 @@
           </div>
           <div class="row mt-2">
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary" [disabled]="titleError">Submit</button>
             </div>
           </div>
         </form>

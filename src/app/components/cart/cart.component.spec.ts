@@ -33,9 +33,6 @@ describe('CartComponent', () => {
   });
 
   it('should calculate total', () => {
-    // For some reason this test fails sometimes.
-    // Cannot say the exact reason, but for some reason
-    // it checks total sum when not all required products added to cart.
     const cartService = fixture.debugElement.injector.get(CartService);
     cartService.removeAllProducts();
     cartService.addProductToCart(1, 3);

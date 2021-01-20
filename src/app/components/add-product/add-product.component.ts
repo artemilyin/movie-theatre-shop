@@ -10,6 +10,7 @@ import { ProductsDataService } from "../../services/products-data.service";
 export class AddProductComponent implements OnInit {
   @Output() productAdded: EventEmitter<any> = new EventEmitter<any>();
 
+  titleError: boolean = false;
   productForm: FormGroup;
   formDefaults = {
     id: this.productsData.getProducts().length + 1,
@@ -48,5 +49,10 @@ export class AddProductComponent implements OnInit {
   // Emits productAdded event.
   emitProductAdded():void {
     this.productAdded.emit(true);
+  }
+
+  // Checks if product exists.
+  checkProductExistence(event: any) {
+    this.titleError = this.productsData.productExists(event.target.value);
   }
 }

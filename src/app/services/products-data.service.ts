@@ -75,4 +75,16 @@ export class ProductsDataService {
 
     return JSON.parse(addedProducts);
   }
+
+  // Checks if such product exists.
+  productExists(title: string): boolean {
+    let exists = false;
+    this.getProducts().forEach(product => {
+      if (product.title.toLowerCase() == title.toLowerCase()) {
+        exists = true;
+      }
+    });
+
+    return exists;
+  }
 }

@@ -28,4 +28,10 @@ describe('ProductsDataService', () => {
     service.addProduct(productData);
     expect(service.getUserProducts().length).toBeGreaterThanOrEqual(1);
   });
+
+  it('should check product existence', () => {
+    let productTitle = 'popcorn';
+    expect(service.productExists(productTitle)).toBeTrue();
+    expect(service.productExists('not existing product')).toBeFalse();
+  });
 });
