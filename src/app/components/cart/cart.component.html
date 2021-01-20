@@ -31,7 +31,7 @@
 
       </div>
       <div class="modal-footer" *ngIf="productsInCartData.length > 0">
-        <button type="button" class="btn btn-primary">Checkout</button>
+        <a class="btn btn-primary" routerLink="/thank-you" data-dismiss="modal" (click)="removeAllProducts()">Checkout</a>
       </div>
     </div>
   </div>
