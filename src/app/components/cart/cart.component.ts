@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { ProductsDataService } from "../../services/products-data.service";
+import {Product, ProductsDataService} from "../../services/products-data.service";
 import { CartService, ProductsInCart } from "../../services/cart.service";
 
 interface SingleProductInCart {
@@ -11,6 +11,9 @@ interface SingleProductInCart {
   discountAmount: number,
   quantity: number
 }
+interface SingleProductTotals {
+  [key: number]: number;
+}
 
 @Component({
   selector: 'app-cart',
@@ -20,6 +23,7 @@ interface SingleProductInCart {
 export class CartComponent implements OnInit {
   @Output() cartCleared: EventEmitter<any> = new EventEmitter<any>();
 
+  productsTotals: SingleProductTotals = {};
   productsAdded: ProductsInCart = {};
   productsInCartData: Array<SingleProductInCart> = [];
   totalSum: number = 0;
@@ -68,24 +72,31 @@ export class CartComponent implements OnInit {
     let total = 0;
     let productsInCart = this.productsInCartData;
     for (let product of productsInCart) {
-      if (product.discount) {
-        let discounted = Math.floor(product.quantity / product.discountAmount);
-        let regular = product.quantity % product.discountAmount;
-        let discountedPrice = product.discountAmount * product.price * product.discountPercentage / 100;
-        total += regular * product.price + discounted * discountedPrice;
-      }
-      else {
-        total += product.price * product.quantity;
-      }
+      total += this.calculateSingleProductTotal(product);
     }
 
     this.totalSum = total;
   }
 
+  // Calculates single product total.
+  calculateSingleProductTotal(product: SingleProductInCart): number {
+    if (product.discount) {
+      let discounted = Math.floor(product.quantity / product.discountAmount);
+      let regular = product.quantity % product.discountAmount;
+      let discountedPrice = product.discountAmount * product.price * product.discountPercentage / 100;
+
+      return regular * product.price + discounted * discountedPrice;
+    }
+
+    return product.price * product.quantity;
+  }
+
   // Updates products in cart
   updateProductsInCart(): void {
     this.productsAdded = this.cartService.getAllProducts();
-    this.productsInCartData = this.productsCartDisplayData();
+    let productsInCartData = this.productsCartDisplayData();
+    this.productsInCartData = productsInCartData
+    this.calculateProductsTotals(productsInCartData);
   }
 
   // Removes single product from cart
@@ -93,5 +104,12 @@ export class CartComponent implements OnInit {
     this.cartService.removeProductFromCart(productId)
     this.updateProductsInCart();
     this.calculateTotal();
+  }
+
+  // Calculates totals for each product.
+  calculateProductsTotals(products: Array<SingleProductInCart>): void {
+    for (let product of products) {
+      this.productsTotals[product.id] = this.calculateSingleProductTotal(product);
+    }
   }
 }

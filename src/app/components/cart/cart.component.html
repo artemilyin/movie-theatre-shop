@@ -13,6 +13,7 @@
           <div class="card-body">
             <h4 class="card-title">{{ product.title }}</h4>
             <h5 class="card-subtitle">{{ product.quantity }} items, {{ product.price | currency }} each <span *ngIf="product.discount">(or {{ product.discountAmount }} for only {{ product.discountPercentage }}% of the price)</span></h5>
+            <p class="card-text">Total for {{ product.title }} {{ productsTotals[product.id] | currency }}</p>
             <button class="btn btn-danger mt-3" (click)="removeProduct(product.id)">Remove from cart</button>
           </div>
         </div>
