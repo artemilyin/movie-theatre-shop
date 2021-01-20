@@ -27,12 +27,30 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="row mt-3">
             <div class="col">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="discount" formControlName="discount">
                 <label class="form-check-label" for="discount">
                   Does product have a discount?
                 </label>
+              </div>
+            </div>
+            <div class="col" *ngIf="productForm.get('discount')!.value">
+              <div class="form-check">
+                <label class="form-check-label" for="percentage">
+                  Discount percentage
+                </label>
+                <input type="number" id="percentage" class="form-control" min="10" value="10" max="90" formControlName="discountPercentage" step="5">
+              </div>
+            </div>
+            <div class="col" *ngIf="productForm.get('discount')!.value">
+              <div class="form-check">
+                <label class="form-check-label" for="amount">
+                  For which amount?
+                </label>
+                <input class="form-control" type="number" value="2" min="2" id="amount" formControlName="discountAmount">
               </div>
             </div>
           </div>

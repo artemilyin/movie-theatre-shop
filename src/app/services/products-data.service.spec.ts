@@ -20,6 +20,8 @@ describe('ProductsDataService', () => {
       title: "Hamburger",
       price: 3,
       discount: false,
+      discountPercentage: 10,
+      discountAmount: 2,
       image: "assets/images/soda.jpg",
       description: "Hamburgers are tasty food, but not always healthy"
     };

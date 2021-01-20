@@ -6,7 +6,7 @@
       <img src="{{ product.image }}" alt="alt" class="card-img-top" *ngIf="product.image">
       <div class="card-body">
         <h5 class="card-title mx-auto">{{ product.title }}</h5>
-        <p class="card-subtitle mx-auto">{{ product.price | currency }} <span *ngIf="product.discount">(or five for the price of three)</span></p>
+        <p class="card-subtitle mx-auto">{{ product.price | currency }} <span *ngIf="product.discount">(or {{ product.discountAmount }} for only {{ product.discountPercentage }}% of the price)</span></p>
         <p class="card-text mx-auto" *ngIf="product.description">{{ product.description }}</p>
       </div>
       <div class="card-footer">

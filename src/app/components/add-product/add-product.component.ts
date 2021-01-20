@@ -14,9 +14,11 @@ export class AddProductComponent implements OnInit {
   formDefaults = {
     id: this.productsData.getProducts().length + 1,
     title: '',
-    price: 0,
+    price: 1,
     description: '',
     discount: false,
+    discountPercentage: 10,
+    discountAmount: 2,
     image: ''
   };
 

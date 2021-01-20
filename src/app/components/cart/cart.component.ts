@@ -7,6 +7,8 @@ interface SingleProductInCart {
   title: string,
   price: number,
   discount: boolean,
+  discountPercentage: number,
+  discountAmount: number,
   quantity: number
 }
 
@@ -40,6 +42,8 @@ export class CartComponent implements OnInit {
           title: product.title,
           price: product.price,
           discount: product.discount,
+          discountPercentage: product.discountPercentage,
+          discountAmount: product.discountAmount,
           quantity: this.productsAdded[product.id]
         });
       }
@@ -65,9 +69,10 @@ export class CartComponent implements OnInit {
     let productsInCart = this.productsInCartData;
     for (let product of productsInCart) {
       if (product.discount) {
-        let discounted = Math.floor(product.quantity / 5);
-        let regular = product.quantity % 5;
-        total += regular * product.price + discounted * 3 * product.price;
+        let discounted = Math.floor(product.quantity / product.discountAmount);
+        let regular = product.quantity % product.discountAmount;
+        let discountedPrice = product.discountAmount * product.price * product.discountPercentage / 100;
+        total += regular * product.price + discounted * discountedPrice;
       }
       else {
         total += product.price * product.quantity;

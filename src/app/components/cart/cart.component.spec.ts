@@ -41,7 +41,7 @@ describe('CartComponent', () => {
     cartService.addProductToCart(1, 3);
     cartService.addProductToCart(2, 5);
     cartService.addProductToCart(3, 1);
-    component.productsCartDisplayData();
+    component.updateProductsInCart();
     component.calculateTotal();
     fixture.detectChanges();
 

@@ -12,7 +12,7 @@
         <div class="card text-center mb-3" *ngFor="let product of productsInCartData;">
           <div class="card-body">
             <h4 class="card-title">{{ product.title }}</h4>
-            <h5 class="card-subtitle">{{ product.quantity }} items, {{ product.price | currency }} each <span *ngIf="product.discount">(or five for the price of three)</span></h5>
+            <h5 class="card-subtitle">{{ product.quantity }} items, {{ product.price | currency }} each <span *ngIf="product.discount">(or {{ product.discountAmount }} for only {{ product.discountPercentage }}% of the price)</span></h5>
             <button class="btn btn-danger mt-3" (click)="removeProduct(product.id)">Remove from cart</button>
           </div>
         </div>
